@@ -11,11 +11,14 @@
     <div class="page">
       <div class="page__content">
         <header class="header">
+          <!-- Header -->
           <h1 class="header__title">The Simple ToDo App</h1>
           <p class="header__banner">Do these things</p>
+          <!-- to do button -->
           <button class="button button_action_add header__button">
             + Add Todo
           </button>
+          <!-- pop up form -->
           <div class="popup" id="add-todo-popup">
             <div class="popup__content">
               <h3 class="popup__title">Add new ToDo</h3>
@@ -69,6 +72,7 @@
           <section class="counter">
             <h2 class="counter__text">Showing X out of Y completed</h2>
           </section>
+          <!-- checklist on main page -->
           <section class="todos">
             <ul class="todos__list">
               <template id="todo-template">
@@ -88,8 +92,8 @@
               </template>
             </ul>
           </section>
-          <script src="./pages/index.js" defer></script>
-          <script src="./scripts/validate.js" defer></script>
+          <!-- two scripts linked -->
+          <script src="./pages/index.js" type="module"></script>
         </main>
       </div>
     </div>
