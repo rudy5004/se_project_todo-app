@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 class FormValidator {
   constructor(settings, formEl) {
     this._inputSelector = settings.inputSelector;
@@ -6,17 +7,20 @@ class FormValidator {
     this._inputErrorClass = settings.inputErrorClass;
     this._inactiveButtonClass = settings.inactiveButtonClass;
     this._formEl = formEl;
+    this._buttonElement = this._formEl.querySelector(
+      this._submitButtonSelector
+    );
   }
-  // is it okay to have errorElement?
+
   _showInputError(inputElement) {
     const errorElement = this._formEl.querySelector(
       `#${inputElement.id}-error`
     );
     inputElement.classList.add(this._inputErrorClass);
-    errorElement.textContent = errorMessage;
+    errorElement.textContent = inputElement.validationMessage;
     errorElement.classList.add(this._errorClass);
   }
-  // is it okay to have const errorElement?
+
   _hideInputError(inputElement) {
     const errorElement = this._formEl.querySelector(
       `#${inputElement.id}-error`
@@ -35,20 +39,32 @@ class FormValidator {
   }
 
   _hasInvalidInput() {
-    return this._inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
-    });
+    return this._inputList.some((inputElement) => !inputElement.validity.valid);
   }
 
   _toggleButtonState() {
-    if (this._hasInvalidInput(this._inputList)) {
-      this._formEl.classList.add(this._inactiveButtonClass);
-      this._formEl.disabled = true;
+    if (this._hasInvalidInput()) {
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this._buttonElement.disabled = true;
     } else {
-      this._formEl.classList.remove(this._inactiveButtonClass);
-      this._formEl.disabled = false;
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.disabled = false;
     }
   }
+
+  _disableButton() {
+    this._buttonElement.disabled = true;
+    this._buttonElement.classList.add(this._inactiveButtonClass);
+  }
+
+  resetValidation() {
+    this._inputList.forEach((input) => {
+      input.textContent = "";
+      this._hideInputError(input);
+    });
+    this._disableButton();
+  }
+
   _setEventListeners() {
     this._inputList = Array.from(
       this._formEl.querySelectorAll(this._inputSelector)
@@ -73,11 +89,3 @@ class FormValidator {
 }
 
 export default FormValidator;
-
-// resetValidation(){
-//     this._popupEl = document.querySelector('.popup').content.querySelector('.popup_content').cloneNode(true);
-//     this._popupInputEl = this._popupEl.querySelector(".popup_label");
-
-//     this._popupInputEl.textContent = "";
-
-// }
