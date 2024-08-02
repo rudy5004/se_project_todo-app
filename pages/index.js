@@ -14,6 +14,7 @@ const openModal = (modal) => {
 };
 
 const closeModal = (modal) => {
+  //addTodoForm.reset();
   modal.classList.remove("popup_visible");
 };
 

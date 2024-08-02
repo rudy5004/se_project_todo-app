@@ -77,6 +77,11 @@
   line-height: 1.2;
   font-weight: 500;
   color: #7d7d7d;
+  height: 135px;
+}
+
+.popup__label:nth-of-type(2) {
+  height: 120px;
 }
 
 .popup__input {
